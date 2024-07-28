@@ -23,6 +23,7 @@ pipeline {
 
         stage('Release'){
                    steps {
+
                      echo 'CI'
                   }
            }
