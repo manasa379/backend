@@ -13,8 +13,7 @@ pipeline {
     stage('Code Quality'){
       when {
         allOf{
-          branch 'main'
-          expression { env.TAG_NAME = env.GIT_BRANCH }
+         expression { env.TAG_NAME = env.GIT_BRANCH }
         }
       }
       steps {
@@ -25,6 +24,7 @@ pipeline {
         stage('Unit Tests'){
           when {
              allOf{
+               expression { env.TAG_NAME = env.GIT_BRANCH }
                branch 'main'
              }
           }
