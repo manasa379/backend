@@ -10,22 +10,33 @@ pipeline {
     }
 
     stage('Code Quality'){
-           steps {
-             sh 'sonar-scanner -Dsonar.host.url=http://172.31.44.195:9000 -Dsonar.login=admin -Dsonar.password=admin123 -Dsonar.projectKey=backend -Dsonar.qualitygate.wait=true'
+      when {
+        allof{
+          branch 'main'
+          expression { env.TAG_NAME = env.BRANCH_NAME }
+        }
+      }
+      steps {
+        sh 'sonar-scanner -Dsonar.host.url=http://172.31.44.195:9000 -Dsonar.login=admin -Dsonar.password=admin123 -Dsonar.projectKey=backend -Dsonar.qualitygate.wait=true'
           }
         }
 
         stage('Unit Tests'){
-               steps {
-                 echo 'CI'
+          when {
+             allof{
+               branch 'main'
+             }
+          }
+          steps {
+          // sh 'npm test'
+            echo 'CI'
               }
             }
 
         stage('Release'){
-                   steps {
-
-                     echo 'CI'
-                  }
+           steps {
+              echo 'CI'
+              }
            }
    }
 }
