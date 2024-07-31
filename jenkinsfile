@@ -24,7 +24,7 @@ pipeline {
         stage('Unit Tests'){
           when {
              allOf{
-               expression { env.TAG_NAME = env.GIT_BRANCH }
+               expression { env.TAG_NAME != env.GIT_BRANCH }
                branch 'main'
              }
           }
@@ -36,7 +36,7 @@ pipeline {
 
         stage('Release'){
            when {
-                expression { env.TAG_NAME == ".*"}
+                expression { env.TAG_NAME ==~ ".*"}
            }
            steps {
               echo 'CI'
